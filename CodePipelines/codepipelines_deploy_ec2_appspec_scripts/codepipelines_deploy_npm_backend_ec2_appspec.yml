@@ -1,0 +1,16 @@
+version: 0.0
+os: linux
+
+files:
+  - source: /
+    destination: /home/ec2-user/$application_name/
+    overwrite: true
+
+hooks:
+  BeforeInstall:
+    - location: scripts/BeforeInstallHook.sh
+      timeout: 300
+
+  AfterInstall:
+    - location: scripts/AfterInstallHook.sh
+      timeout: 100

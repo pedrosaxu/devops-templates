@@ -1,0 +1,27 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 16
+    commands:
+      - npm install
+
+  pre_build:
+    commands:
+      # Caso não seja possível implementarmos o arquivo .env diretamente na raiz do 
+      # repositório, podemos hospedá-los no s3 deployment-files com o nome .backend.env.$ambiente (exemplo .backend.env.prod) 
+      # e baixá-los através da tasks abaixo:
+      - aws s3 cp s3://deployments-files/envs/.env.backend.$ambiente .env
+
+  build:
+    commands:
+      - npm run-script build
+      # Caso não seja possível implementarmos os appspecs e scripts de deployment diretamente na raiz do 
+      # repositório, podemos hospedá-los em um s3 com o nome deployments-files e baixá-los através das tasks abaixo:
+      - aws s3 cp s3://deployments-files/deployment/ . --recursive
+
+artifacts:
+  files:
+    - '**/*'
+
+

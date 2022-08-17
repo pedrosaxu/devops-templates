@@ -1,0 +1,41 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
+
+- task: CopyFiles@2
+  displayName: 'Copiando os arquivos compilados (/target) para o diretório de compactação...'
+  inputs:
+    SourceFolder: '$(System.DefaultWorkingDirectory)/target/'
+    Contents: '**'
+    TargetFolder: '$(Build.BinariesDirectory)'
+
+- task: ArchiveFiles@2
+  displayName: 'Compactando os arquivos gerados durante o build...'
+  inputs:
+    rootFolderOrFile: '$(Build.BinariesDirectory)/b'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.DefinitionName)-$(Build.BuildId).zip'
+    replaceExistingArchive: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publicando os artefatos de build...'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.DefinitionName)-$(Build.BuildId).zip'
+    ArtifactName: '$(Build.DefinitionName)-$(Build.BuildId).zip'
+    publishLocation: 'Container'
