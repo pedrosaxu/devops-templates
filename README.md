@@ -20,5 +20,5 @@ Repository where I'll save and publish all the templates I develop on my day-to-
 ---
 ## Infrastructure Automation
 
-<strong>font color="#807a6b"> Bootstrap Scripts </font></strong>
+<strong><font color="#807a6b"> Bootstrap Scripts </font></strong>
 - [Build: npm (backend on ec2).yml](/BootstrapScripts/ec2_userdata_codedeploy_interpreter.sh)
