@@ -1,9 +1,5 @@
-# devops-templates
-Repository where I'll save and publish all the templates I develop on my day-to-day basis.
 
----
-
-## CI/CD Pipelines
+# CI/CD Pipelines
 
 <strong><font color="#807a6b"> Azure Devops </font></strong>
 - [Build: maven x java (frontend)](/AzureDevops/azdevops_build_maven_java_backend.yml)
@@ -18,7 +14,7 @@ Repository where I'll save and publish all the templates I develop on my day-to-
 - [Deploy: npm (backend on ec2)](/CodePipelines/codepipelines_deploy_ec2_appspec_scripts/codepipelines_deploy_npm_backend_ec2_appspec.yml)
 
 ---
-## Infrastructure Automation
+# Infrastructure Automation
 
 <strong><font color="#807a6b"> Bootstrap Scripts </font></strong>
 - [Build: npm (backend on ec2).yml](/BootstrapScripts/ec2_userdata_codedeploy_interpreter.sh)
