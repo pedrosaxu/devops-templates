@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #   In some setups, you may need to know the range of IP addresses where agents are deployed. 
 #   For instance, if you need to grant the hosted agents access through a firewall, you may 
 #   wish to restrict that access by IP address. Because Azure DevOps uses the Azure global network, 

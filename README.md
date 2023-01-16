@@ -16,5 +16,8 @@
 ---
 # Infrastructure Automation
 
-<strong><font color="#807a6b"> Bootstrap Scripts </font></strong>
-- [Build: npm (backend on ec2).yml](/BootstrapScripts/ec2_userdata_codedeploy_interpreter.sh)
+<strong><font color="#807a6b"> Useful Devops Shellscripts</font></strong>
+- [CodeDeploy: nstalls Node and CodeDeploy Agent](/UsefulDevopsShellScripts/ec2_userdata_codedeploy_interpreter.sh)
+- [Azure Devops: Install and setup AzureDevops Agent](/UsefulDevopsShellScripts/azuredevops_agent_setup.sh)
+- [Azure Devops: Update AzureDevops' Public IPs to Firewall Rules](/UsefulDevopsShellScripts/azuredevops_public_ips_grabber.sh)
+- [Kubernetes: Deploy - rollout restart - and watch pods' status](/UsefulDevopsShellScripts/kubernetes_deployment_watcher.sh)
