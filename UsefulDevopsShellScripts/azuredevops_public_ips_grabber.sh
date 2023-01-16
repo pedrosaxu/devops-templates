@@ -84,7 +84,7 @@ cat all_addresses | grep -E "(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA
 echo "IPV6 total count: $(wc -l < ipv6_addresses)"
 
 
-# Separar com , ao invés de quebra de linha
+# Comma separated, instead of line break separated
 tr '\n' ',' < ipv4_addresses > ipv4_addresses.tmp && mv ipv4_addresses.tmp ipv4_addresses
 tr '\n' ',' < ipv6_addresses > ipv6_addresses.tmp && mv ipv6_addresses.tmp ipv6_addresses
 
