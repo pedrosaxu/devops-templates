@@ -30,7 +30,10 @@ jobs:
           chmod 777 azuredevops_public_ips_grabber.sh
           ./azuredevops_public_ips_grabber.sh
           pwd & ls
-          git add -A azuredevops_public_ips/ 
+          git config --global user.email "githubactions@github.com.br"
+          git config --global user.name "Github Actions"
+          git add -A azuredevops_public_ips/
+          git stage
           git commit -m "Atualizando IPs"
           git push
           
