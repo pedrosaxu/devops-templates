@@ -30,6 +30,10 @@ jobs:
           chmod 777 azuredevops_public_ips_grabber.sh
           ./azuredevops_public_ips_grabber.sh
           pwd & ls
+          git add -A azuredevops_public_ips/ 
+          git commit -m "Atualizando IPs"
+          git push
+          
           
       - name: Upload a all_addresses
         uses: actions/upload-artifact@v3.1.2
@@ -37,7 +41,7 @@ jobs:
           # Artifact name
           name: all_addresses
           # A file, directory or wildcard pattern that describes what to upload
-          path: azuredevops_public_ips/all_addresses
+          path: UsefulDevopsShellScripts/azuredevops_public_ips/all_addresses
           # The desired behavior if no files are found using the provided path.
           
       - name: Upload a ipv4_addresses
@@ -46,7 +50,7 @@ jobs:
           # Artifact name
           name: ipv4_addresses
           # A file, directory or wildcard pattern that describes what to upload
-          path: azuredevops_public_ips/ipv4_addresses
+          path: UsefulDevopsShellScripts/azuredevops_public_ips/ipv4_addresses
 
           
       - name: Upload a ipv6_addresses
@@ -55,7 +59,7 @@ jobs:
           # Artifact name
           name: ipv6_addresses
           # A file, directory or wildcard pattern that describes what to upload
-          path: azuredevops_public_ips/ipv6_addresses
+          path: UsefulDevopsShellScripts/azuredevops_public_ips/ipv6_addresses
 
 
 
