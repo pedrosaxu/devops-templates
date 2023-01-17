@@ -20,4 +20,5 @@
 - [CodeDeploy: nstalls Node and CodeDeploy Agent](/UsefulDevopsShellScripts/ec2_userdata_codedeploy_interpreter.sh)
 - [Azure Devops: Install and setup AzureDevops Agent](/UsefulDevopsShellScripts/azuredevops_agent_setup.sh)
 - [Azure Devops: Update AzureDevops' Public IPs to Firewall Rules](/UsefulDevopsShellScripts/azuredevops_public_ips_grabber.sh)
+   - [This files update every Wednestay](https://github.com/pedrosaxu/devops-templates/tree/main/UsefulDevopsShellScripts/azuredevops_public_ips)
 - [Kubernetes: Deploy - rollout restart - and watch pods' status](/UsefulDevopsShellScripts/kubernetes_deployment_watcher.sh)
