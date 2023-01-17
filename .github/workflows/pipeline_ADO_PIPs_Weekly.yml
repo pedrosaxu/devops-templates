@@ -26,7 +26,7 @@ jobs:
       - name: Run a multi-line script
         run: |
           pwd && ls
-          cd devops-templates/UsefulDevopsShellScripts/
+          cd UsefulDevopsShellScripts/
           chmod 777 azuredevops_public_ips_grabber.sh
           ./azuredevops_public_ips_grabber.sh
           pwd & ls
