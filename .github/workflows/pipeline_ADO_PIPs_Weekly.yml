@@ -33,7 +33,7 @@ jobs:
           git config --global user.email "githubactions@github.com.br"
           git config --global user.name "Github Actions"
           cd azuredevops_public_ips/
-          git att -A .
+          git add -A .
           git stage
           git commit -m "Atualizando IPs"
           git push
