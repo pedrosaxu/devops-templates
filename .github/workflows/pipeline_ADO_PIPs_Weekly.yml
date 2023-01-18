@@ -32,11 +32,12 @@ jobs:
           pwd & ls
           git config --global user.email "githubactions@github.com.br"
           git config --global user.name "Github Actions"
-          git add -A azuredevops_public_ips/
+          cd azuredevops_public_ips/
+          git att -A .
           git stage
           git commit -m "Atualizando IPs"
           git push
-          
+        continue-on-error: true
           
       - name: Upload a all_addresses
         uses: actions/upload-artifact@v3.1.2
