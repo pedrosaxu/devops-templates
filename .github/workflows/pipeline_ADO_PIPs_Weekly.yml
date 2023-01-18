@@ -37,6 +37,7 @@ jobs:
           git stage
           git commit -m "Atualizando IPs"
           git push
+          git status
         continue-on-error: true
           
       - name: Upload a all_addresses
