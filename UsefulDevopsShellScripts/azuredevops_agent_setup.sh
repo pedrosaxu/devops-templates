@@ -6,9 +6,6 @@ AZ_ORGANIZATION_NAME="test-julia"
 AZ_ORGANIZATION_PAT="<token>"
 AZ_AGENT_POOL_NAME="linux-ubuntu"
 
-# Login as the agent user:
-sudo su $AZ_AGENT_USER && cd ~
-
 # Download and unpack the agent
 cd ~
 mkdir azdevops_agent && cd azdevops_agent
