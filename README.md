@@ -17,13 +17,16 @@
 # Infrastructure Automation
 
 <strong><font color="#807a6b"> Useful Devops Shellscripts</font></strong>
-- [CodeDeploy: nstalls Node and CodeDeploy Agent](/UsefulDevopsShellScripts/ec2_userdata_codedeploy_interpreter.sh)
+- [CodeDeploy: Installs Node and CodeDeploy Agent](/UsefulDevopsShellScripts/ec2_userdata_codedeploy_interpreter.sh)
 - [Azure Devops: Install and setup AzureDevops Agent](/UsefulDevopsShellScripts/azuredevops_agent_setup.sh)
 - [Azure Devops: Update AzureDevops' Public IPs to Firewall Rules](/UsefulDevopsShellScripts/azuredevops_public_ips_grabber.sh)
    - [This files update every Wednestay](https://github.com/pedrosaxu/devops-templates/tree/main/UsefulDevopsShellScripts/azuredevops_public_ips)
 - [Kubernetes: Deploy - rollout restart - and watch pods' status](/UsefulDevopsShellScripts/kubernetes_deployment_watcher.sh)
 
-# Youtube Videos
+
+---
+
+# <img src="./.github/images/youtube.png" alt="youtube" width="20"> Youtube Videos 
 - [\[AZURE DEVOPS\] Agente Self-Hosted com Terraform](https://www.youtube.com/watch?v=amzxuVjOqjk) -> (/Youtube/azdevops_linux_agent)
 - [\[SCRIPTS\] Devops, IAC e a Automação "de Antigamente"](https://www.youtube.com/watch?v=U07iWPk8PdY) -> (/Youtube/serie_iac/01_scripts_sob_demanda)
 - [\[TERRAFORM\] Terraform Import, Terracognita e Azure Terrafy](https://www.youtube.com/watch?v=DaYPrIk2l0c) -> (/Youtube/terraform_import_terracognita_terrafy)
