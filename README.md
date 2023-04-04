@@ -31,3 +31,4 @@
 - [\[SCRIPTS\] Devops, IAC e a Automação "de Antigamente"](https://www.youtube.com/watch?v=U07iWPk8PdY) -> (/Youtube/serie_iac/01_scripts_sob_demanda)
 - [\[TERRAFORM\] Terraform Import, Terracognita e Azure Terrafy](https://www.youtube.com/watch?v=DaYPrIk2l0c) -> (/Youtube/terraform_import_terracognita_terrafy)
 - [\[TERRAFORM\] Executando scripts com os Terraform Provisioners](https://www.youtube.com/watch?v=3GdaA4Lthag) -> (/Youtube/terraform_provisioners_endpoint_curl)
+- [\[TERRAFORM\] Criando Outputs Customizados com External Datasources]() -> (/Youtube/terraform_external_data_endpoint_curl)
