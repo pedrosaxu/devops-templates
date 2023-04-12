@@ -59,8 +59,8 @@ def lambda_handler(event, context):
     cluster = 'ClusterName'
     task_count = 1
     task_launch_type = 'FARGATE'
-    task_subnets=['subnet-0314fc17e537bd8e5','subnet-09a2993f8fcd3d807']
-    task_sg=['sg-006b2ef7d4ba82721']
+    task_subnets=['subnet-00000000000','subnet-000000000']
+    task_sg=['sg-0000000000']
     task_public_ip = 'ENABLED'
 
     account_id = get_account_data()
