@@ -13,6 +13,9 @@
 - [Build: npm (frontend on s3)](/CodePipelines/codepipelines_build_npm_frontend_s3_buildspec.yml)
 - [Deploy: npm (backend on ec2)](/CodePipelines/codepipelines_deploy_ec2_appspec_scripts/codepipelines_deploy_npm_backend_ec2_appspec.yml)
 
+<strong><font color="#807a6b"> Data Pipelines </font></strong>
+- [Data Pipeline: Promote Power BI Reports between Workspaces](/DataPipelines/powerbi_reports_promotion.ps1)
+
 ---
 # Infrastructure Automation
 
