@@ -1,0 +1,231 @@
+trigger: none
+
+pool: 
+  vmImage: ubuntu-20.04
+
+parameters:
+- name: client
+  displayName: Nome do Cliente (ex. client_a)
+  type: string
+  default: ""
+
+- name: project
+  displayName: Apelido do Projeto (ex. project_a)
+  type: string
+  default: ""
+
+- name: envs
+  displayName: Ambientes do Projeto (respeitar a formatação de lista)
+  type: string
+  default: "[\"dev\",\"hml\",\"pro\"]"
+
+steps:
+
+############################################################################################################################
+#                                    VALIDANDO SE O PROJETO E/OU REPOSITÓRIO EXISTEM                                       #
+############################################################################################################################
+
+- task: PythonScript@0
+  name: validate_workspaces
+  displayName: Verificando se o projeto e o workspace existem
+  inputs:
+    scriptSource: 'inline'
+    script: |
+      from requests import get
+      from os import getenv
+
+      # Pegando variáveis de ambiente e passando para o python de forma segura
+
+      ado_token = getenv('ADO_TOKEN')
+      client = getenv('CLIENT_NAME')
+      account = getenv('ACCOUNT_NAME')
+      envs = getenv('ENVS')
+      ded_client = f'{client}'
+
+      # Verificando se o projeto já existe
+      projects=[]
+      projectexists = False
+      json_data = get("https://dev.azure.com/pedrosaxu/_apis/projects?api-version=6.0", auth=("", ado_token)).json()
+      
+      for i in range (0,len(json_data["value"]),1):
+         projects.append(json_data["value"][i]["name"])
+      
+      for i in projects:
+         if i == ded_client:
+          projectexists = True
+
+      # Verificando se o repositorio já existe
+      
+      repositories=[]
+      repoexists = False
+      json_data = get("https://dev.azure.com/pedrosaxu/_apis/git/repositories?api-version=6.0", auth=("", ado_token)).json()
+
+      for i in range (0,len(json_data["value"]),1):
+        repositories.append(json_data["value"][i]["name"])
+
+      for i in repositories:
+        if i == (f'{client}-{account}'):
+          repoexists = True
+      
+
+      # Imprimindo as variáveis de saída
+
+      print (f'##vso[task.setvariable variable=projectexists;isoutput=true]{projectexists}')
+      print (f'##vso[task.setvariable variable=repoexists;isoutput=true]{repoexists}')
+      print (f'##[warning] {"#"*120}')
+      print (f'##[warning] Project (client) exists: {projectexists}')
+      print (f'##[warning] Repo (account_workspace) exists: {repoexists}')
+      print (f'##[warning] {"#"*120}')
+  env:
+    ADO_TOKEN: $(ado_organization_pat)
+    ACCOUNT_NAME: "${{ parameters.project }}"
+    CLIENT_NAME: "${{ parameters.client }}"
+    ENVS: ${{ parameters.envs }}
+
+  ############################################################################################################################
+  #                             CRIANDO OS PROJETOS NO AZURE DEVOPS E NO TERRAFORM CLOUD                                     #
+  ############################################################################################################################
+
+- script: |
+    echo "##[section]Project (client) exists: $(validate_workspaces.projectexists)"
+    
+    # Configurando as credenciais do GIT
+    git config --global http.$(System.CollectionUri).extraheader "AUTHORIZATION: bearer $(System.AccessToken)"
+
+    # Criando os projetos no Azure Devops e Terraform Cloud - caso não existam
+
+    if [[ $(validate_workspaces.projectexists) == "False" ]] ;
+    then 
+
+      cd $(System.DefaultWorkingDirectory)/new_client_account
+
+      terraform init > init.json
+      echo -e "##[group] New project: Terraform Init... \n $(cat init.json)"
+      echo "##[endgroup]"
+
+      terraform apply --auto-approve > apply.json
+      echo -e "##[group] New project: Terraform Apply... \n $(cat apply.json)"
+      echo "##[endgroup]"      
+
+      # Em caso de erro no apply, printar o erro
+
+      if [[ `cat apply.json | grep "Error: Error "` == "" ]];
+      then
+        echo "##[section] Projeto criado para o cliente $TF_VAR_client_name, acesse em: https://dev.azure.com/pedrosaxu/$TF_VAR_client_name"
+
+      else
+        echo -e "##[error] Não foi possível realizar a criação de um projeto para o cliente $TF_VAR_client_name, verifique as variáveis e tente novamente."
+      fi
+
+    # Informando que o projeto já existe - caso exista
+
+    elif [[ $(validate_workspaces.projectexists) == "True" ]] ;
+    then
+      echo "##[warning] O cliente $TF_VAR_client_name já possui um projeto criado, acesse em: https://dev.azure.com/pedrosaxu/$TF_VAR_client_name"
+    
+    else
+      echo "##[error] Não foi possível validar a existência de um projeto para o cliente $TF_VAR_client_name, verifique as variáveis e tente novamente."
+
+    fi
+
+  name: 'CreateProject'
+  displayName: 'Criando o projeto ${{ parameters.client }}'
+  env:
+    TF_VAR_account_name: "${{ parameters.project }}"
+    TF_VAR_client_name: "${{ parameters.client }}"
+    TF_VAR_envs: ${{ parameters.envs }}
+    TF_VAR_ado_organization_pat: $(ado_organization_pat)
+    TF_VAR_tfe_token_api: $(tfe_token_api)
+
+  ############################################################################################################################
+  #                   CRIANDO O REPOSITORIO NO AZURE DEVOPS E O WORKSPACE NO TERRAFORM CLOUD                                 #
+  ############################################################################################################################
+
+- script: |
+    echo "##[section]Repo (account_workspace) exists: $(validate_workspaces.repoexists)"
+
+    # Configurando as credenciais do GIT
+    git config --global http.$(System.CollectionUri).extraheader "AUTHORIZATION: bearer $(System.AccessToken)"
+
+
+    # Criando os repositorios no Azure Devops e os Workspaces no Terraform Cloud - caso não existam
+
+    if [[ $(validate_workspaces.repoexists) == "False" ]] ;
+    then 
+      cd $(System.DefaultWorkingDirectory)/new_client_project
+
+      terraform init > init.json
+      echo -e "##[group]New workspace: Terraform Init... \n $(cat init.json)"
+      echo "##[endgroup]"
+
+      terraform apply --auto-approve > apply.json
+      echo -e "##[group]New workspace: Terraform Apply... \n $(cat apply.json)"
+      echo "##[endgroup]"
+
+      # Pegando o ID do projeto criado no Terraform Cloud para o output 
+      
+      project_id=$(curl 'https://app.terraform.io/api/v2/organizations/pedrosaxu/projects' \
+      --header 'Authorization: Bearer $(tfe_token_api)' \
+      | jq -r '.data[] | [.attributes.name , .id] | @csv' \
+      | grep "\"$TF_VAR_client_name\"" \
+      | cut -f 2 -d "," \
+      | sed 's/"//g')
+
+      # Em caso de erro no apply, printar o erro
+
+      if [[ `cat apply.json | grep "Error: Error "` == "" ]];
+      then
+        echo -e "##[section] workspace criado para o cliente $TF_VAR_client_name, acesse em conforme os links abaixo: \n##[section] Projeto: https://dev.azure.com/pedrosaxu/-$TF_VAR_client_name \n##[section] Repositório: https://dev.azure.com/pedrosaxu/-$TF_VAR_client_name/_git/$TF_VAR_client_name-$TF_VAR_account_name \n##[section] Terraform Cloud Project: https://app.terraform.io/app/pedrosaxu/workspaces?project=$project_id"
+      else
+        echo -e "##[error] Não foi possível realizar a criação de um workspace para a conta  $TF_VAR_account_name para o cliente $TF_VAR_client_name, \n##[error] verifique as variáveis e tente novamente."
+      fi
+
+      # Informando que o repositório já existe - caso exista
+
+    elif [[ $(validate_workspaces.repoexists) == "True" ]] ;
+    then
+      echo -e "##[warning] A conta  $TF_VAR_account_name do cliente $TF_VAR_client_name já possui um workspace criado, acesse em conforme os links abaixo: \n##[warning] Projeto: https://dev.azure.com/pedrosaxu/-$TF_VAR_client_name \n##[warning] Repositório: https://dev.azure.com/pedrosaxu/-$TF_VAR_client_name/_git/$TF_VAR_client_name-$TF_VAR_account_name \n##[warning] Terraform Cloud Project: https://app.terraform.io/app/pedrosaxu/workspaces?project=$project_id"
+
+    else
+      echo -e "##[error] Não foi possível validar a existência de um workspace para a conta  $TF_VAR_account_name para o cliente $TF_VAR_client_name, \n##[error] verifique as variáveis e tente novamente."
+    fi 
+
+  name: 'CreateWorkspace'
+  displayName: 'Criando os workspaces para conta ${{ parameters.client }}-${{ parameters.project }}'
+  env:
+    TF_VAR_account_name: "${{ parameters.project }}"
+    TF_VAR_client_name: "${{ parameters.client }}"
+    TF_VAR_envs: ${{ parameters.envs }}
+    TF_VAR_ado_organization_pat: $(ado_organization_pat)
+    TF_VAR_tfe_token_api: $(tfe_token_api)
+
+############################################################################################################################
+#                    CRIANDO O NOVO AMBIENTE NO REPOSITÓRIO E WORKSPACE NO TERRAFORM CLOUD                                 #
+############################################################################################################################
+
+- script: |
+    # Configurando as credenciais do GIT para uso dos módulos
+    git config --global http.$(System.CollectionUri).extraheader "AUTHORIZATION: bearer $(System.AccessToken)"
+
+    # Criando os novos arquivos e Workspaces - caso não existam
+    cd $(System.DefaultWorkingDirectory)/new_project_env
+
+    terraform init > init.json
+    echo -e "##[group]New env: Terraform Init... \n $(cat init.json)"
+    echo "##[endgroup]"
+
+    terraform apply --auto-approve > apply.json
+    echo -e "##[group]New env: Terraform Apply... \n $(cat apply.json)"
+    echo "##[endgroup]"
+
+  name: 'CreateEnvironment'
+  displayName: 'Criando os arquivos e workspaces para conta $TF_VAR_client_name-$TF_VAR_account_name'
+  env:
+    TF_VAR_account_name: "${{ parameters.project }}"
+    TF_VAR_client_name: "${{ parameters.client }}"
+    TF_VAR_envs: ${{ parameters.envs }}
+    TF_VAR_ado_organization_pat: $(ado_organization_pat)
+    TF_VAR_tfe_token_api: $(tfe_token_api)
+    TF_VAR_ado_tfe_oauth_token: $(ado_tfe_oauth_token)
+
+
