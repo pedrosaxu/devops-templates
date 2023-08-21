@@ -27,6 +27,9 @@
 - [Kubernetes: Deploy - rollout restart - and watch pods' status](/UsefulDevopsShellScripts/kubernetes_deployment_watcher.sh)
 - [Install Wordpress with Apache](/UsefulDevopsShellScripts/wordpress_apache_setup.sh)
 
+---
+# Talks
+- [Terraform at Scale - DevopsDays](/TerraformAtScale)
 
 ---
 
