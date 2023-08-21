@@ -2,7 +2,7 @@
 
 ## 📚 Sobre o projeto
 
-Projeto apresentado no DevOpsDays Rio 2023, [ppt disponível aqui](/ppt_terraformatscale.pdf).
+Projeto apresentado no DevOpsDays Rio 2023, [ppt disponível aqui](/TerraformAtScale/ppt_terraformatscale.pdf).
 
 
 ### Pipeline de criação de projetos e ambientes Terraform
