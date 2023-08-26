@@ -5,3 +5,5 @@
 - [\[TERRAFORM\] Executando scripts com os Terraform Provisioners](https://www.youtube.com/watch?v=3GdaA4Lthag) -> (/Youtube/terraform_provisioners_endpoint_curl)
 - [\[TERRAFORM\] Criando Outputs Customizados com External Datasources](https://www.youtube.com/watch?v=ssVp6WzAyTE) -> (/Youtube/terraform_external_data_endpoint_curl)
 - [\[AWS\] Autoscaling do ECS Fargate baseado em SQS com Lambda](https://www.youtube.com/watch?v=id) -> (/Youtube/sqs_lambda_ecs_fargate_autoscaling)
+- [\[TERRAFORM | AWS\] Terraform com Secrets Manager](https://www.youtube.com/watch?v=id) -> (/Youtube/terraform_aws_secrets_manager)
+  
