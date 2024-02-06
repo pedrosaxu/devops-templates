@@ -26,6 +26,7 @@
    - [This files update every Wednestay](https://github.com/pedrosaxu/devops-templates/tree/main/UsefulDevopsShellScripts/azuredevops_public_ips)
 - [Kubernetes: Deploy - rollout restart - and watch pods' status](/UsefulDevopsShellScripts/kubernetes_deployment_watcher.sh)
 - [Install Wordpress with Apache](/UsefulDevopsShellScripts/wordpress_apache_setup.sh)
+- [Generate AWS Config Report for Uncompliant Resources to CSV](/AWS/aws_config.py)
 
 ---
 # Talks
