@@ -1,0 +1,17 @@
+name: GitHub Readme update
+on:
+  schedule:    
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update Youtube
+        uses: DenverCoder1/github-readme-youtube-cards@main
+        with:
+          channel_id: UCqJwwgvBB0uXwrPBWddujyg
+          comment_tag_name: YOUTUBE-CARDS
+          youtube_api_key: ${{ secrets.YOUTUBE_API_KEY }}
+          show_duration: true
