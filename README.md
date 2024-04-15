@@ -36,7 +36,7 @@
 
 ---
 # 📚 Resources
-- [CKA BluePrint MindMap](/HowToAceCKA)
+- [CKA BluePrint MindMap](/HowToAceCKA/CKABluePrintMindMap.png)
 
 ---
 
