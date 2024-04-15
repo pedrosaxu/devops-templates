@@ -1,5 +1,5 @@
 
-# CI/CD Pipelines
+# 🪢 CI/CD Pipelines
 
 <strong><font color="#807a6b"> Azure Devops </font></strong>
 - [Build: maven x java (frontend)](/AzureDevops/azdevops_build_maven_java_backend.yml)
@@ -17,7 +17,7 @@
 - [Data Pipeline: Promote Power BI Reports between Workspaces](/DataPipelines/powerbi_reports_promotion.ps1)
 
 ---
-# Infrastructure Automation
+# 🔧 Infrastructure Automation
 
 <strong><font color="#807a6b"> Useful Devops Shellscripts</font></strong>
 - [CodeDeploy: Installs Node and CodeDeploy Agent](/UsefulDevopsShellScripts/ec2_userdata_codedeploy_interpreter.sh)
@@ -31,8 +31,12 @@
 - [Generate AWS Config Report for Uncompliant Resources to CSV](/AWS/aws_config.py)
 
 ---
-# Talks
+# 🎤 Talks
 - [Terraform at Scale - DevopsDays](/TerraformAtScale)
+
+---
+📚 Resources
+- [CKA BluePrint MindMap](/HowToAceCKA)
 
 ---
 
