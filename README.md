@@ -35,7 +35,7 @@
 - [Terraform at Scale - DevopsDays](/TerraformAtScale)
 
 ---
-📚 Resources
+# 📚 Resources
 - [CKA BluePrint MindMap](/HowToAceCKA)
 
 ---
